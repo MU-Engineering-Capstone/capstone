@@ -1,7 +1,7 @@
 import "./History.css";
 import TripPlanner from "./../TripPlanner/TripPlanner";
 import SelectTrip from "../SelectTrip/SelectTrip";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function History(props) {
 	const [tripDetails, setTripDetails] = useState(null);
@@ -9,7 +9,7 @@ export default function History(props) {
 	return (
 		<div className="history-page">
 			{tripDetails ? (
-				<TripPlanner tripDetails={tripDetails} isArchived={true} />
+				<TripPlanner tripDetails={tripDetails} />
 			) : (
 				<SelectTrip
 					setTripDetails={setTripDetails}

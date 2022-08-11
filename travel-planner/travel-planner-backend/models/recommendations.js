@@ -25,22 +25,6 @@ class Recommendations {
 		}
 
 		// TODO: Add walkability here.
-		const walkabilityResult = await this.getWalkabilityData(location);
-		const minWalkability = userPreferences.get("MinWalkability");
-
-		if (walkabilityResult.walkScore < minWalkability) {
-			return {
-				type: "DRIVING",
-				reason:
-					"The route is " +
-					walkabilityResult.walkDescription +
-					" with a walkability score of " +
-					walkabilityResult.walkScore.toString() +
-					". See " +
-					walkabilityResult.moreInfoLink +
-					" for more walkability score information.",
-			};
-		}
 
 		// Get weather information
 		const weatherResult = await this.getWeatherData(location);
@@ -96,13 +80,6 @@ class Recommendations {
 				weight[key] /= total;
 			});
 
-			// The higher the walk score the better. If under 65, this is no longer a good sign and should subtract from the score.
-			if (walkabilityResult.walkScore > 65) {
-				points += walkabilityResult.walkScore / 500;
-			} else {
-				points -= 1.5 / walkabilityResult.walkScore;
-			}
-
 			// Consider how close the temperature is to ideal (or the center of the user's tempRange)
 			// 1 - abs( distance from the mean ) / ( total range )
 			let idealTemp = (tempRange.min + tempRange.max) / 2;
@@ -129,9 +106,7 @@ class Recommendations {
 				return {
 					type: "WALKING",
 					reason:
-						"The weather is nice, the route is very walkable, and is more suitable for your preferences compared to driving. See " +
-						walkabilityResult.moreInfoLink +
-						" for more walkability information.",
+						"The weather is nice and driving will include lots of traffic.",
 				};
 			} else {
 				return {
@@ -194,39 +169,6 @@ class Recommendations {
 
 		// Note: I can also display weather for the next 5 days, but let's not do that for now. (I can even get weather icons!)
 		// https://openweathermap.org/weather-conditions#How-to-get-icon-URL
-	}
-
-	static async getWalkabilityData(location) {
-		const API_KEY = process.env.WALKABILITY_API_KEY;
-
-		const params = {
-			format: "json",
-			lat: location.lat,
-			lon: location.lng,
-			wsapikey: API_KEY,
-		};
-
-		try {
-			const response = await axios.get("https://api.walkscore.com/score", {
-				params,
-			});
-			const result = response.data;
-
-			if (result.status === 1) {
-				return {
-					walkScore: result.walkscore,
-					walkDescription: result.description,
-					moreInfoLink: result.ws_link,
-				};
-			} else {
-				throw "ERROR while using Walkability API: " + result.description;
-			}
-		} catch (error) {
-			throw (
-				"ERROR: in backend while fetching walkability score information: " +
-				error
-			);
-		}
 	}
 }
 

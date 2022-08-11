@@ -78,19 +78,3 @@
 	font-size: 14px;
 	transition: ease-in-out 0.8s;
 }
-
-.trip-banner-container {
-	position: relative;
-}
-
-.trip-banner-container > .fa-image {
-	position: absolute;
-	right: 18px;
-	top: 18px;
-	z-index: 10;
-	opacity: 36%;
-}
-
-.trip-banner-container > .fa-image:hover {
-	opacity: 80%;
-}

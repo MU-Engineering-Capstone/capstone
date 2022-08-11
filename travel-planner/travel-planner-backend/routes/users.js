@@ -3,7 +3,6 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const userModel = require("./../models/users");
 const Parse = require("parse/node");
-const { query } = require("express");
 
 router.use(bodyParser.json());
 
@@ -125,32 +124,6 @@ router.post("/savePreferences", async (req, res) => {
 					error: error,
 				});
 			});
-	});
-});
-
-router.post("/getRecentTrip", async (req, res) => {
-	const sessionToken = req.body.sessionToken;
-
-	let query = new Parse.Query("_Session");
-	query.equalTo("sessionToken", sessionToken);
-	query.first().then((session) => {
-		if (session) {
-			const user = session.get("user");
-			query = new Parse.Query("Maps");
-			query.descending("updatedAt");
-			query.equalTo("User", user);
-			query.equalTo("Archived", false);
-			query.find().then((maps) => {
-				res.status(200).send({
-					message: "Successfully querried for most recent map.",
-					map: maps[0],
-				});
-			});
-		} else {
-			res
-				.status(400)
-				.send({ message: "ERROR: no user found when getting recent trip." });
-		}
 	});
 });
 

@@ -81,6 +81,7 @@ router.post("/newMap", async (req, res) => {
 			if (session) {
 				const user = session.get("user");
 				if (user) {
+					console.log("user: ", user);
 					map.set("User", user);
 					map.set("MapName", title);
 					map.set(
@@ -256,30 +257,6 @@ router.post("/archiveMap", async (req, res) => {
 			})
 			.catch((error) => {
 				res.status(400).send({ message: "ERROR when archiving trip." });
-			});
-	});
-});
-
-router.post("/setTripBackground", async (req, res) => {
-	const imgSrc = req.body.imgSrc;
-	const mapId = req.body.mapId;
-
-	const query = new Parse.Query("Maps");
-	query.equalTo("objectId", mapId);
-	query.first().then((map) => {
-		map.set("Background", imgSrc);
-		map
-			.save()
-			.then(() => {
-				res.status(200).send({ message: "New background saved." });
-			})
-			.catch((error) => {
-				console.log("Error: ", error)
-				res
-					.status(400)
-					.send({
-						message: "ERROR when saving background in database: " + error,
-					});
 			});
 	});
 });

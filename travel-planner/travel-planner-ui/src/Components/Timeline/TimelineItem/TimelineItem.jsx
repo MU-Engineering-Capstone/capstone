@@ -45,8 +45,8 @@ export default function TimelineItem(props) {
 	};
 
 	return (
-		// <Draggable axis="y" bounds="parent">
-			// {/* 24 hours = 1440 minutes */}
+		<Draggable axis="y" bounds="parent">
+			{/* 24 hours = 1440 minutes */}
 			<div className="timeline-item" style={{ flex: (duration / 1440) * 2 }}>
 				<div className="timeline-item-top">
 					<h3 className="timeline-item-title">{props.name}</h3>
@@ -118,6 +118,6 @@ export default function TimelineItem(props) {
 					</div>
 				</div>
 			</div>
-		// </Draggable>
+		</Draggable>
 	);
 }

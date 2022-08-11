@@ -44,6 +44,7 @@ class Maps {
 				query
 					.find()
 					.then(function (maps) {
+						console.log(maps);
 						return maps;
 					})
 					.catch((error) => {
@@ -73,6 +74,7 @@ class Maps {
 
 		axios.get('http://api.positionstack.com/v1/forward', { params })
 			.then(response => {
+				console.log("response: ", response.data.data[0])
 				return response.data.data[0]
 			})
 			.catch ((error) => {

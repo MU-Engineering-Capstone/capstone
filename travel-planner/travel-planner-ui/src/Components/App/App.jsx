@@ -17,6 +17,8 @@ export default function App() {
 	return (
 		<div className="app">
 			<BrowserRouter>
+				{/* We only show the navbar options if there is a user logged in. */}
+				{/* Create an overview page later under the login so new users can see what they can do with the website. */}
 				<Navbar />
 				<div className="body">
 					<Routes>
