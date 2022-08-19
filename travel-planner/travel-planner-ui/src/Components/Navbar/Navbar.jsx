@@ -2,6 +2,7 @@ import "./Navbar.css";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../UserContext";
+import logo from "./../../Images/logo.png";
 
 export default function Navbar() {
 	const { sessionToken, signUpUser, logInUser, logOutUser } =
@@ -10,6 +11,9 @@ export default function Navbar() {
 	return (
 		<div className="navbar">
 			<div className="nav-left">
+				<Link className="nav-item" to="/">
+					<img style={{ filter: "invert(1)" }} src={logo} height="50px" />
+				</Link>
 				<Link className="nav-item" to="/plan">
 					Plan
 				</Link>

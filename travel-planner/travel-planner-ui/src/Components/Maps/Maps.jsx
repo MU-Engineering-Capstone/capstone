@@ -36,7 +36,7 @@ export default function Maps({
 				setMap(
 					new window.google.maps.Map(ref.current, {
 						center: { lat: trip.Center.latitude, lng: trip.Center.longitude }, // position by default (shows the center of the map) 30, 0
-						zoom: 3,
+						zoom: 12,
 						disableDoubleClickZoom: true,
 					})
 				);

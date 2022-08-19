@@ -10,6 +10,7 @@ import { PORT } from "./../App/App";
 
 export default function Timeline(props) {
 	const [possibleTimelines, setPossibleTimelines] = useState(null);
+	const [isExpanded, setIsExpanded] = useState(false);
 	let componentRef = useRef();
 
 	const deleteItem = async (itemToDeleteId) => {
@@ -71,24 +72,40 @@ export default function Timeline(props) {
 	let i = -1; // use this to increment the index of directions array when rendering.
 
 	return (
-		<>
-			<SelectTimelineBubble
-				timelines={possibleTimelines}
-				setTimeline={props.setTimeline}
-				timelineMarkers={props.timelineMarkers}
-				setDisplayedMarkers={props.setMarkers}
-				mapId={props.mapId}
-				setPossibleTimelines={setPossibleTimelines}
-			/>
+		<div
+			className="timeline-container"
+			style={{
+				height: isExpanded ? "84vh" : "6vh",
+				overflowY: isExpanded ? "scroll" : "hidden",
+			}}
+		>
+			<h2
+				onDoubleClick={() => {
+					setIsExpanded((prev) => !prev);
+				}}
+			>
+				Timeline
+			</h2>
+			{isExpanded && (
+				<>
+					<SelectTimelineBubble
+						timelines={possibleTimelines}
+						setTimeline={props.setTimeline}
+						timelineMarkers={props.timelineMarkers}
+						setDisplayedMarkers={props.setMarkers}
+						mapId={props.mapId}
+						setPossibleTimelines={setPossibleTimelines}
+					/>
+					<hr></hr>
+				</>
+			)}
 			{props.timelineItems && (
-				<div className="timeline-container">
+				<>
 					<div
 						className="printable-timeline"
 						ref={(ele) => (componentRef = ele)}
 					>
-						<h2>Timeline</h2>
 						<p>{props.timeline.Date}</p>
-						<hr></hr>
 						<div className="timeline-markers">
 							{props.timelineItems.map((item) => {
 								i++;
@@ -123,8 +140,8 @@ export default function Timeline(props) {
 							content={() => componentRef}
 						/>
 					</div>
-				</div>
+				</>
 			)}
-		</>
+		</div>
 	);
 }

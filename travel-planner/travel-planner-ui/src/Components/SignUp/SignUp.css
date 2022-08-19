@@ -1,6 +1,7 @@
 #sign-up-page {
 	display: flex;
 	justify-content: center;
+	margin-top: 3vh;
 }
 
 #sign-up-page h1 {

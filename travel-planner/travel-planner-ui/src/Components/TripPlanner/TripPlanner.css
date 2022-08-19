@@ -4,6 +4,9 @@
 
 .right-app {
 	flex: 1;
+	background-color: rgba(255, 228, 196, 0.527);
+	overflow-y: auto;
+	height: 96vh;
 }
 
 .directions-mode-button {
